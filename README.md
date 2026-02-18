@@ -20,7 +20,7 @@ I ran into a lot of problems building this and spent a long time debugging. I'm 
 
 ## Live Demo
 
-👉 https://your-app.vercel.app
+👉 https://smart-book-mark-blush.vercel.app
 
 ---
 
