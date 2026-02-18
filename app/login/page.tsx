@@ -1,54 +1,87 @@
-'use client'
+"use client";
 
-import { createClient } from '@/utils/supabase/client'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const supabase = createClient()
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const supabase = createClient();
 
   const handleGoogleLogin = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      })
-      if (error) throw error
+        provider: "google",
+        options: { redirectTo: `${window.location.origin}/auth/callback` },
+      });
+      if (error) throw error;
     } catch (error) {
-      console.error('Error logging in:', error)
-      alert('Failed to login. Please try again.')
-      setIsLoading(false)
+      console.error("Error logging in:", error);
+      alert("Failed to login. Please try again.");
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-600 rounded-full mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{ backgroundColor: "#F4F6FA" }}
+    >
+      <div
+        className="w-full max-w-sm p-8 rounded-[5px] bg-white"
+        style={{ border: "1px solid #1F2937" }}
+      >
+        {/* Icon + Title */}
+        <div className="flex flex-col items-center text-center mb-8">
+          <div
+            className="w-12 h-12 flex items-center justify-center mb-4 rounded-[5px]"
+            style={{ backgroundColor: "#1E2A5A" }}
+          >
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+              />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Smart Bookmark App</h1>
-          <p className="text-gray-600">Save and organize your favorite links</p>
+          <h1
+            className="text-xl font-bold tracking-tight"
+            style={{ color: "#1E2A5A" }}
+          >
+            My Library
+          </h1>
+          <p className="text-xs mt-1" style={{ color: "#6B7280" }}>
+            Save and organize your favorite links
+          </p>
         </div>
 
+        {/* Divider */}
+        <div className="mb-6" style={{ borderTop: "1px solid #F4F6FA" }} />
+
+        {/* Google Button */}
         <button
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:border-indigo-500 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full flex items-center justify-center gap-3 bg-white px-5 py-2.5 text-sm font-medium rounded-[5px] active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          style={{ border: "1px solid #1F2937", color: "#1E2A5A" }}
         >
           {isLoading ? (
-            <div className="w-5 h-5 border-2 border-gray-300 border-t-indigo-600 rounded-full animate-spin"></div>
+            <div
+              className="w-4 h-4 border-2 border-gray-200 rounded-full animate-spin"
+              style={{ borderTopColor: "#1E2A5A" }}
+            ></div>
           ) : (
             <>
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -71,10 +104,13 @@ export default function LoginPage() {
           )}
         </button>
 
-        <p className="text-xs text-gray-500 text-center mt-6">
+        <p
+          className="text-[10px] text-center mt-5 leading-relaxed"
+          style={{ color: "#6B7280" }}
+        >
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>
     </div>
-  )
+  );
 }
